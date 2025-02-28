@@ -40,8 +40,8 @@ class Product {
         title: "گوشی سامسونگ A52",
         price: "12,000,000 تومان",
         images: [
-          "https://picsum.photos/200/300",
-          "https://picsum.photos/250/300",
+          "https://i.postimg.cc/jqGtMWgS/652d03208716201626d081c2.jpg",
+          "https://i.postimg.cc/g0Bfr512/download.jpg",
         ],
         description:
             "گوشی سامسونگ A52 با صفحه نمایش 6.5 اینچی، حافظه 128 گیگ و باتری 4500 میلی‌آمپری.",
@@ -51,8 +51,8 @@ class Product {
         title: "لپ‌تاپ لنوو مدل IdeaPad",
         price: "18,500,000 تومان",
         images: [
-          "https://picsum.photos/300/300",
-          "https://picsum.photos/350/300",
+          "https://i.postimg.cc/LsT0ZW71/download-1.jpg",
+          "https://i.postimg.cc/fT92vypZ/images.jpg",
         ],
         description:
             "لپ‌تاپ لنوو با پردازنده Core i5، رم 8 گیگابایت و صفحه نمایش Full HD.",
@@ -62,8 +62,8 @@ class Product {
         title: "هدفون بی‌سیم Sony WH-1000XM4",
         price: "9,800,000 تومان",
         images: [
-          "https://picsum.photos/400/300",
-          "https://picsum.photos/450/300",
+          "https://i.postimg.cc/QMxvSscb/head1.jpg",
+          "https://i.postimg.cc/1RN2vvVL/head2.jpg",
         ],
         description:
             "هدفون سونی WH-1000XM4 با کیفیت صدای عالی و نویز کنسلینگ فوق‌العاده.",

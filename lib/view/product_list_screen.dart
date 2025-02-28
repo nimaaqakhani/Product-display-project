@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/model/product_model.dart';
-import 'package:flutter_application_1/services/api_service.dart';
 import 'package:get/get.dart';
+import 'package:flutter_application_1/controllers/product_controller.dart';
 import 'product_detail_screen.dart';
 
 class ProductListScreen extends StatelessWidget {
-  final ApiService _apiService = ApiService();
+  final ProductController _productController = Get.put(ProductController());
+
+  ProductListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,33 +24,29 @@ class ProductListScreen extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
         elevation: 10,
       ),
-      body: FutureBuilder<List<Product>>(
-        future: _fetchCombinedProducts(), // آینده برای دریافت داده‌ها
+      body: FutureBuilder<void>(
+        future: _productController
+            .fetchAndCombineProducts(), 
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            // نمایش بارگذاری در حال بارگذاری
             return const Center(
               child: CircularProgressIndicator(
                 color: Colors.deepPurple,
               ),
             );
           } else if (snapshot.hasError) {
-            // نمایش خطا در صورتی که درخواست با خطا مواجه شود
             return Center(
               child: Text('خطا: ${snapshot.error}'),
             );
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            // نمایش پیام در صورتی که داده‌ای وجود نداشته باشد
+          } else if (_productController.products.isEmpty) {
             return const Center(
               child: Text('محصولی پیدا نشد!'),
             );
           }
-          // نمایش لیست محصولات
-          List<Product> products = snapshot.data!;
           return ListView.builder(
-            itemCount: products.length,
+            itemCount: _productController.products.length,
             itemBuilder: (context, index) {
-              final product = products[index];
+              final product = _productController.products[index];
               return GestureDetector(
                 onTap: () {
                   Get.to(() => ProductDetailScreen(product: product));
@@ -78,7 +75,6 @@ class ProductListScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      // نمایش عکس‌ها به صورت اسلایدی
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(15)),
@@ -95,7 +91,6 @@ class ProductListScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // نمایش تایتل و قیمت
                       Padding(
                         padding: const EdgeInsets.all(16),
                         child: Column(
@@ -121,7 +116,6 @@ class ProductListScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // نمایش توضیحات
                       Padding(
                         padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                         child: Text(
@@ -141,21 +135,5 @@ class ProductListScreen extends StatelessWidget {
         },
       ),
     );
-  }
-
-  /// تابع برای ترکیب داده‌های فیک و API
-  Future<List<Product>> _fetchCombinedProducts() async {
-    try {
-      // دریافت محصولات فیک
-      List<Product> fakeProducts = Product.fakeProducts();
-
-      // دریافت محصولات از API
-      List<Product> apiProducts = await _apiService.fetchProducts();
-
-      // ترکیب دو لیست
-      return [...fakeProducts, ...apiProducts];
-    } catch (e) {
-      throw Exception("Failed to load products: $e");
-    }
   }
 }

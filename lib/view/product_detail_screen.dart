@@ -4,7 +4,7 @@ import 'package:flutter_application_1/model/product_model.dart';
 class ProductDetailScreen extends StatelessWidget {
   final Product product;
 
-  ProductDetailScreen({required this.product});
+  const ProductDetailScreen({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class ProductDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           product.title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -26,12 +26,11 @@ class ProductDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // نمایش عکس‌ها به صورت اسلایدی
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
                 borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(20)),
+                    const BorderRadius.vertical(bottom: Radius.circular(20)),
                 child: SizedBox(
                   height: 300,
                   child: PageView.builder(
@@ -46,15 +45,14 @@ class ProductDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
-            // نمایش تایتل و قیمت
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
                     product.title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                       color: Colors.deepPurple,
@@ -62,7 +60,7 @@ class ProductDetailScreen extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.right,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     product.price,
                     style: TextStyle(
@@ -76,18 +74,17 @@ class ProductDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            // نمایش رتبه‌بندی (Rating)
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  Icon(Icons.star_half, color: Colors.amber, size: 20),
-                  SizedBox(width: 8),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star, color: Colors.amber, size: 20),
+                  const Icon(Icons.star_half, color: Colors.amber, size: 20),
+                  const SizedBox(width: 8),
                   Text(
                     '۴.۵ (۱۲۳ نظر)',
                     style: TextStyle(
@@ -99,14 +96,13 @@ class ProductDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            // نمایش ویژگی‌های محصول
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     'ویژگی‌های محصول:',
                     style: TextStyle(
                       fontSize: 20,
@@ -116,19 +112,18 @@ class ProductDetailScreen extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.right,
                   ),
-                  SizedBox(height: 10),
-                  ..._buildFeatureList(), // نمایش لیست ویژگی‌ها
+                  const SizedBox(height: 10),
+                  ..._buildFeatureList(),
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            // نمایش توضیحات
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     'توضیحات محصول:',
                     style: TextStyle(
                       fontSize: 20,
@@ -138,7 +133,7 @@ class ProductDetailScreen extends StatelessWidget {
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.right,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     product.description,
                     style: TextStyle(
@@ -152,25 +147,22 @@ class ProductDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
-            // دکمه‌های اقدام (Call to Action)
+            const SizedBox(height: 20),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Row(
                 children: [
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {
-                        // اقدام برای خرید
-                      },
+                      onPressed: () {},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.deepPurple,
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'خرید محصول',
                         style: TextStyle(
                           fontSize: 18,
@@ -180,20 +172,18 @@ class ProductDetailScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: OutlinedButton(
-                      onPressed: () {
-                        // اقدام برای افزودن به سبد خرید
-                      },
+                      onPressed: () {},
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        side: BorderSide(color: Colors.deepPurple),
+                        side: const BorderSide(color: Colors.deepPurple),
                       ),
-                      child: Text(
+                      child: const Text(
                         'افزودن به سبد خرید',
                         style: TextStyle(
                           fontSize: 18,
@@ -206,14 +196,13 @@ class ProductDetailScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
     );
   }
 
-  // تابع برای ساخت لیست ویژگی‌ها
   List<Widget> _buildFeatureList() {
     return [
       _buildFeatureItem('رنگ: مشکی'),
@@ -223,10 +212,9 @@ class ProductDetailScreen extends StatelessWidget {
     ];
   }
 
-  // تابع برای ساخت هر آیتم ویژگی
   Widget _buildFeatureItem(String text) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -238,8 +226,8 @@ class ProductDetailScreen extends StatelessWidget {
             ),
             textDirection: TextDirection.rtl,
           ),
-          SizedBox(width: 8),
-          Icon(Icons.check_circle, color: Colors.green, size: 18),
+          const SizedBox(width: 8),
+          const Icon(Icons.check_circle, color: Colors.green, size: 18),
         ],
       ),
     );
