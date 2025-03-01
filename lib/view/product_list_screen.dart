@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/view/student/student_screen_view.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/controllers/product_controller.dart';
 import 'product_detail_screen.dart';
@@ -116,24 +117,32 @@ class ProductListScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                        child: Text(
-                          product.description,
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey.shade800,
+                      GestureDetector(
+                        onTap: () {
+                                                Get.to(() => StudentListScreen());
+
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                          child: Text(
+                            product.description,
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade800,
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
+                
               );
             },
           );
         },
       ),
+      
     );
   }
 }
