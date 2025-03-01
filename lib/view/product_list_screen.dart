@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/view/student/student_screen_view.dart';
-import 'package:get/get.dart';
-import 'package:flutter_application_1/controllers/product_controller.dart';
+import 'package:flutter_application_1/services/api_service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_application_1/bloc/product_bloc.dart';
 import 'product_detail_screen.dart';
 
 class ProductListScreen extends StatelessWidget {
-  final ProductController _productController = Get.put(ProductController());
-
-  ProductListScreen({super.key});
+  const ProductListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,32 +23,44 @@ class ProductListScreen extends StatelessWidget {
         backgroundColor: Colors.deepPurple,
         elevation: 10,
       ),
-      body: FutureBuilder<void>(
-        future: _productController
-            .fetchAndCombineProducts(), 
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: Colors.deepPurple,
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('خطا: ${snapshot.error}'),
-            );
-          } else if (_productController.products.isEmpty) {
+      body: BlocProvider(
+        create: (_) => ProductBloc(ApiService())..add(FetchProductsEvent()),
+        child: ProductList(),
+      ),
+    );
+  }
+}
+
+class ProductList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        if (state is ProductLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.deepPurple,
+            ),
+          );
+        } else if (state is ProductLoaded) {
+          final products = state.products;
+          if (products.isEmpty) {
             return const Center(
               child: Text('محصولی پیدا نشد!'),
             );
           }
           return ListView.builder(
-            itemCount: _productController.products.length,
+            itemCount: products.length,
             itemBuilder: (context, index) {
-              final product = _productController.products[index];
+              final product = products[index];
               return GestureDetector(
                 onTap: () {
-                  Get.to(() => ProductDetailScreen(product: product));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => ProductDetailScreen(product: product),
+                    ),
+                  );
                 },
                 child: Container(
                   margin: const EdgeInsets.all(10),
@@ -78,7 +88,8 @@ class ProductListScreen extends StatelessWidget {
                     children: [
                       ClipRRect(
                         borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(15)),
+                          top: Radius.circular(15),
+                        ),
                         child: SizedBox(
                           height: 200,
                           child: PageView.builder(
@@ -117,32 +128,29 @@ class ProductListScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                                                Get.to(() => StudentListScreen());
-
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-                          child: Text(
-                            product.description,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey.shade800,
-                            ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        child: Text(
+                          product.description,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey.shade800,
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                
               );
             },
           );
-        },
-      ),
-      
+        } else if (state is ProductError) {
+          return Center(
+            child: Text('خطا: ${state.message}'),
+          );
+        }
+        return Container();
+      },
     );
   }
 }
