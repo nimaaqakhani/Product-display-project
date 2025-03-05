@@ -6,6 +6,8 @@ class GetProducts {
   GetProducts({required this.repository});
   Future<List<ProductEntity>> call() async {
     final productModels = await repository.getProducts();
-    return productModels.map((productModel) => productModel.toEntity()).toList();
+    return productModels
+        .map((productModel) => productModel.toEntity())
+        .toList();
   }
 }
